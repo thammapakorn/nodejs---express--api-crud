@@ -1,19 +1,18 @@
 const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+const bodyParse = require('body-parser')
 const { readdirSync, read } = require('fs')
-// const productRouters = require('./Routes/product')
-// const authRouters = require('./Routes/auth')
+
 const app = express();
 
-// Route 1
-// app.get('/product',(req,res)=>(
-    // res.send('Hello EndPoint')
-// ))
+// Middleware
+app.use(morgan('dev'))
+app.use(cors())
+app.use(bodyParse.json({limit: '10mb'}))
 
-// Route 2
-// app.use('/api',productRouters)
-// app.use('/api',authRouters)
 
-// Route 3 (ทำเป็นออโต้)
+// Route (ทำเป็นออโต้)
 readdirSync('./Routes')
     .map((r)=> app.use('/api',require('./Routes/'+r)))
 
