@@ -54,7 +54,10 @@ exports.edit = async(req,res)=>{
 
 exports.remove = async(req,res)=>{
     try {
-        res.send('Hello Remove')
+        const id = req.params.id
+        //การ remove ข้อมูล id ใน table โดยใช้ findOneAndDelete
+        const remove = await Product.findOneAndDelete({_id:id}).exec();
+        res.send(remove)
     } catch (error) {
         console.log(err)
         res.status(500).send('Server Error')
