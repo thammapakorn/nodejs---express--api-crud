@@ -1,9 +1,16 @@
 const express = require('express')
+//middleware
 const morgan = require('morgan')
 const cors = require('cors')
 const bodyParse = require('body-parser')
+//connect database
+const connectDB = require('./Config/db')
+
+// Routes
 const { readdirSync, read } = require('fs')
 
+//Database
+connectDB()
 const app = express();
 
 // Middleware
