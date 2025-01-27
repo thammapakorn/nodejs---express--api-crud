@@ -1,10 +1,24 @@
+const Product = require('../Models/Product')
+
+
 exports.read = async(req,res)=>{
-    res.send('Hello Controller Read')
+    try {
+        //สร้างตัวแปร id เก็บข้อมูล id ใน table
+        const id = req.params.id
+        //model Product ใช้คำสั่ง find ทั้งหมด = {}
+        const producted = await Product.findOne({_id: id}).exec();
+        res.send(producted)
+    } catch (error) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
 }
 
 exports.list = async(req,res)=>{
     try{
-        res.send('Hello list')
+        //model Product ใช้คำสั่ง find ทั้งหมด = {}
+        const producted = await Product.find({}).exec();
+        res.send(producted)
     }catch(err){
         console.log(err)
         res.status(500).send('Server Error')
@@ -13,7 +27,11 @@ exports.list = async(req,res)=>{
 
 exports.create = async(req,res)=>{
     try{
-        res.send('Hello Add')
+        console.log(req.body)
+        //model Product ถ้าชื่อตรงกันใส่ req.body ไปได้เลย และสั่งsave
+        const producted = await Product(req.body).save()
+        //ส่งข้อมูลไปให้หน้าบ้านด้วย
+        res.send(producted)
     }catch{
         console.log(err)
         res.status(500).send('Server Error')
