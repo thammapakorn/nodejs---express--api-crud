@@ -40,7 +40,12 @@ exports.create = async(req,res)=>{
 
 exports.edit = async(req,res)=>{
     try {
-        res.send('Hello Edit')
+        const id = req.params.id
+        //การ edit ข้อมูล นอกจากจะต้องส่ง id มาแล้ว ต้องส่งข้อมูลใหม่ที่ต้องการ update มาให้ด้วย
+        const edited = await Product
+        .findOneAndUpdate({_id:id},req.body, {new: true})
+        .exec();
+        res.send(edited)
     } catch (error) {
         console.log(err)
         res.status(500).send('Server Error')
